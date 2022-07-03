@@ -102,11 +102,17 @@ namespace SysMonitorGUI
         }
 
         private async void btnSendData_Click(object sender, EventArgs e)
-        {           
+        {
             if (dataSender.connection.State != HubConnectionState.Connected)
+            {
                 await dataSender.connection.StartAsync();
+                lblState.Text = "Connected";
+            }
             else
+            {
                 await dataSender.connection.StopAsync();
+                lblState.Text = "Disconnected";
+            }
         }
 
         private void frmSysMon_Resize(object sender, EventArgs e)

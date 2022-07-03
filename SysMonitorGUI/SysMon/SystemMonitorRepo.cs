@@ -1,4 +1,5 @@
-﻿using SysMonitorGUI.SysMon.WMIObjects;
+﻿using SysMonitorGUI.Extensions;
+using SysMonitorGUI.SysMon.WMIObjects;
 using SysMonitorGUI.Wmi;
 using System;
 using System.Collections.Generic;
@@ -43,25 +44,27 @@ namespace SysMonitorGUI.SysMon
                                 select new { s }).FirstOrDefault();
 
 
-                return new SysInfoItem()
+                var result = new SysInfoItem()
                 {
-                    cpuClock = cpuClock.s.Max,
+                    cpuClock = cpuClock.s.Max.roundUp(),
                     cpuName = cpuName.Name,
-                    cpuTempMax = cpuSensorData.FirstOrDefault(s => s.Name == OpenHardwareTypes.CPUPackage && s.SensorType == OpenHardwareTypes.Temperature).Max,
-                    cpuTempVal = cpuSensorData.FirstOrDefault(s => s.Name == OpenHardwareTypes.CPUPackage && s.SensorType == OpenHardwareTypes.Temperature).Value,
-                    cpuUsageMax = cpuSensorData.FirstOrDefault(c => c.Name == OpenHardwareTypes.CPUTotal && c.SensorType == OpenHardwareTypes.Load).Max,
-                    cpuUsageVal = cpuSensorData.FirstOrDefault(c => c.Name == OpenHardwareTypes.CPUTotal && c.SensorType == OpenHardwareTypes.Load).Value,
+                    cpuTempMax = cpuSensorData.FirstOrDefault(s => s.Name == OpenHardwareTypes.CPUPackage && s.SensorType == OpenHardwareTypes.Temperature).Max.roundUp(),
+                    cpuTempVal = cpuSensorData.FirstOrDefault(s => s.Name == OpenHardwareTypes.CPUPackage && s.SensorType == OpenHardwareTypes.Temperature).Value.roundUp(),
+                    cpuUsageMax = cpuSensorData.FirstOrDefault(c => c.Name == OpenHardwareTypes.CPUTotal && c.SensorType == OpenHardwareTypes.Load).Max.roundUp(),
+                    cpuUsageVal = cpuSensorData.FirstOrDefault(c => c.Name == OpenHardwareTypes.CPUTotal && c.SensorType == OpenHardwareTypes.Load).Value.roundUp(),
                     gpuName = gpuName.Name,
-                    gpuTempMax = gpuData.FirstOrDefault(c => c.Name == OpenHardwareTypes.GPUCore && c.SensorType == OpenHardwareTypes.Temperature).Max,
-                    gpuTempVal = gpuData.FirstOrDefault(c => c.Name == OpenHardwareTypes.GPUCore && c.SensorType == OpenHardwareTypes.Temperature).Value,
-                    gpuUsageMax = gpuData.FirstOrDefault(c => c.Name == OpenHardwareTypes.GPUCore && c.SensorType == OpenHardwareTypes.Load).Max,
-                    gpuUsageVal = gpuData.FirstOrDefault(c => c.Name == OpenHardwareTypes.GPUCore && c.SensorType == OpenHardwareTypes.Load).Value,
+                    gpuTempMax = gpuData.FirstOrDefault(c => c.Name == OpenHardwareTypes.GPUCore && c.SensorType == OpenHardwareTypes.Temperature).Max.roundUp(),
+                    gpuTempVal = gpuData.FirstOrDefault(c => c.Name == OpenHardwareTypes.GPUCore && c.SensorType == OpenHardwareTypes.Temperature).Value.roundUp(),
+                    gpuUsageMax = gpuData.FirstOrDefault(c => c.Name == OpenHardwareTypes.GPUCore && c.SensorType == OpenHardwareTypes.Load).Max.roundUp(),
+                    gpuUsageVal = gpuData.FirstOrDefault(c => c.Name == OpenHardwareTypes.GPUCore && c.SensorType == OpenHardwareTypes.Load).Value.roundUp(),
                     pcName = Environment.MachineName,
-                    ramFree = ramFree,
-                    ramUsage = ramUsage,
-                    ramLoad = ramLoad,
-                    ramTotal = ramTotal
+                    ramFree = ramFree.roundUp(),
+                    ramUsage = ramUsage.roundUp(),
+                    ramLoad = ramLoad.roundUp(),
+                    ramTotal = ramTotal.roundUp()
                 };
+
+                return result;
             }catch(Exception ex)
             {
                 Debug.WriteLine(ex.Message);

@@ -196,6 +196,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="frmSysMon.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -37,7 +37,7 @@ namespace SysMonitorGUI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2000")]
         public int sendFrequency {
             get {
                 return ((int)(this["sendFrequency"]));
